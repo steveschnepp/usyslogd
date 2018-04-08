@@ -36,6 +36,9 @@
 *.x86_64
 *.hex
 
+/usyslogd
+
+
 # Debug files
 *.dSYM/
 *.su
