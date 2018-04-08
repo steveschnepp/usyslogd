@@ -9,6 +9,11 @@ Install
 
 It is designed to be used with `systemd`.
 
+.. code-block:: sh
+        sudo cp usyslogd.service /etc/systemd/system/
+        sudo systemctl enable usyslogd
+        sudo systemctl start usyslogd
+
 Configuration
 -------------
 
