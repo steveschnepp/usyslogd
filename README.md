@@ -1,2 +1,0 @@
-# usyslogd
-Micro syslog implementation
