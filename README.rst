@@ -20,3 +20,10 @@ Configuration
 
 There is currently *no* configuration possible for the sake of extreme
 simplicity & robustness.
+
+Bugs
+----
+
+It actually doesn't call `syslog(3)`, but simply emits to `stdout`. This enable
+to avoid parsing the incoming message, but the priority isn't handled
+correctly. 
