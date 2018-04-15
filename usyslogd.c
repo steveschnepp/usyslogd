@@ -5,6 +5,7 @@
 #include <syslog.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <pwd.h>
 
 int main(int argc, char **argv) {
     /* create datagram socket */
@@ -24,6 +25,25 @@ int main(int argc, char **argv) {
     if (r < 0) {
         printf("bind failed; errno: %d\n", errno);
         return -1;
+    }
+
+    /* Drop privileges */
+    if (geteuid() == 0) {
+	    struct passwd *pw = getpwnam("nobody");
+	    if (! pw) {
+		    printf("getpwnam failed; errno: %d\n", errno);
+		    return -2;
+	    }
+
+	    if ( setgid(pw->pw_gid) == -1 ) {
+		    printf("setgid failed; errno: %d\n", errno);
+		    return -3;
+	    }
+
+	    if ( setuid(pw->pw_uid) == -1 ) {
+		    printf("setgid failed; errno: %d\n", errno);
+		    return -4;
+	    }
     }
 
     // on each message
