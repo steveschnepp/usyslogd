@@ -60,8 +60,9 @@ int main(int argc, char **argv) {
 			buffer[count] = '\0';
 
 			// Parse the logging message
-			printf("%s\n", buffer, count);
-			fflush(stdout);
+			// A typical message recieved is "<12>cron: this is some message"
+			int priority = LOG_NOTICE;
+			syslog(priority, "%s", buffer);
 		}
     }
 }
