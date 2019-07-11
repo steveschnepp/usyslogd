@@ -1,3 +1,4 @@
+/* (c) 2019 - Steve Schnepp <steve.schnepp@pwkf.org> - Apache License 2.0 */
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
