@@ -52,10 +52,13 @@ int main(int argc, char **argv) {
 	    struct sockaddr_storage src_addr;
 
 	    int flags = 0;
-	    ssize_t count = recvfrom(fd, &buffer, sizeof(buffer), flags, 0, 0);
+	    ssize_t count = recvfrom(fd, &buffer, sizeof(buffer) - 1, flags, 0, 0);
 	    if (count == -1) {
 		fprintf(stderr, "%s\n", strerror(errno));
 		} else {
+			// NUL-close the string
+			buffer[count] = '\0';
+
 			// Parse the logging message
 			printf("%s\n", buffer, count);
 			fflush(stdout);
