@@ -1,3 +1,7 @@
 [Service]
 Restart=on-success
-ExecStart=/home/snide/src/usyslogd/usyslogd
+ExecStart=/usr/local/sbin/usyslogd
+SyslogIdentifier=usyslogd
+
+[Install]
+WantedBy=multi-user.target
