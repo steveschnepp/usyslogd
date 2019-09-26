@@ -4,6 +4,13 @@ usyslogd
 `usyslogd` is a micro syslog implementation that basically listens to the
 syslogd UDP port and transparently calls `syslog(3)`
 
+Static build
+------------
+
+For a minimal size, it is designed to compile with the musl libc a be statically linked. An easy way to achieve that is to simpy use ::
+
+        make CC=musl-gcc LDFLAGS=-static
+
 Install
 -------
 
