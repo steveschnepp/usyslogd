@@ -6,6 +6,7 @@
 #include <syslog.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <pwd.h>
 
 int main(int argc, char **argv) {
@@ -50,10 +51,11 @@ int main(int argc, char **argv) {
     // on each message
     while(1) {
 	    char buffer[64 * 1024] = {0}; // 64kIB
-	    struct sockaddr_storage src_addr;
+	    struct sockaddr_in src_addr;
+	    socklen_t src_addr_len = sizeof(src_addr);
 
 	    int flags = 0;
-	    ssize_t count = recvfrom(fd, &buffer, sizeof(buffer) - 1, flags, 0, 0);
+	    ssize_t count = recvfrom(fd, &buffer, sizeof(buffer) - 1, flags, (struct sockaddr*) &src_addr, &src_addr_len);
 	    if (count == -1) {
 		fprintf(stderr, "%s\n", strerror(errno));
 		} else {
@@ -63,7 +65,7 @@ int main(int argc, char **argv) {
 			// Parse the logging message
 			// A typical message recieved is "<12>cron: this is some message"
 			int priority = LOG_NOTICE;
-			syslog(priority, "%s", buffer);
+			syslog(priority, "[%s:%d] %s", inet_ntoa(src_addr.sin_addr), ntohs(src_addr.sin_port), buffer);
 		}
     }
 }
